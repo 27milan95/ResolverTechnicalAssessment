@@ -32,7 +32,7 @@ public class BaseClass {
 	
 	public void NavigateToHomePage() {
 	String projectpath = System.getProperty("user.dir");
-		browser.get(projectpath+"\\src\\test\\resources\\Application\\QE-index.html");
+		browser.get(projectpath+Utilities.URl);
 	}
 	public void CloseBrowser() {
 		browser.close();

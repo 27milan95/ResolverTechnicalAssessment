@@ -1,8 +1,5 @@
 package StepDefinition;
 
-
-
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -36,9 +33,10 @@ public class HomeSteps extends BaseClass {
 		homepage = new HomePage();
 	}
 
-	@When("User sees Test1 div")
-	public void user_sees_test1_div() {
-	    Assert.assertTrue(homepage.Test1.isDisplayed());
+	@When("User navigate to {string} div")
+	public void user_navigate_to_div(String text) {
+		homepage.ScrollToElement(text);
+	    Assert.assertTrue(homepage.getByText(text).isDisplayed());
 	}
 
 	@Then("User should see input field for Email address, Password and SignIn button")
@@ -54,12 +52,6 @@ public class HomeSteps extends BaseClass {
 		homepage.Password.sendKeys(password);    
 	}
 	
-	@When("User navigate to Test2 div")
-	public void user_navigate_to_test2_div() {
-		Assert.assertTrue(homepage.Test2.isDisplayed());
-
-	}
-
 	@Then("User should see {int} values in the list group")
 	public void user_should_see_values_in_the_list_group(int ExpectedListItemCount) {
 		Assert.assertEquals(homepage.Test2_ListItem.size(), ExpectedListItemCount);
@@ -77,35 +69,17 @@ public class HomeSteps extends BaseClass {
 		Assert.assertEquals(homepage.Test2_BadgeList.get(1).getText(), ExpectedBagdeValue);
 	}
 
-	@When("User scroll to Test3 div")
-	public void user_scroll_to_test3_div() {  
-		homepage.ScrollToElement(homepage.Test3);
-	    Assert.assertTrue(homepage.Test3.isDisplayed());
-	    
+	@Then("{string} should be the selected value")
+	public void should_be_the_selected_value(String SelectedOption) {
+		Assert.assertEquals(homepage.Test3_dropdown.getText(), SelectedOption);	
 	}
 
-	@Then("option {string} should be the default selected value")
-	public void option_should_be_the_default_selected_value(String DefaultOption) {
-		Assert.assertEquals(homepage.Test3_dropdown.getText(), DefaultOption);
+	@When("User select {string} from the dropdown")
+	public void user_select_from_the_dropdown(String text) {
 		homepage.Test3_dropdown.click();
-		
+		homepage.getByText(text).click();  
 	}
 
-	@When("User select option3 from the dropdown")
-	public void user_select_option3_from_the_dropdown() {
-		homepage.dropdown_Option3.click();  
-	}
-
-	@Then("option {string} should be the selected value in the dropdown")
-	public void option_should_be_the_selected_value_in_the_dropdown(String SelectedOption) {
-		Assert.assertEquals(homepage.Test3_dropdown.getText(), SelectedOption);
-	}
-
-	@When("User scroll to Test4 div")
-	public void user_scroll_to_test4_div() {		  
-		homepage.ScrollToElement(homepage.Test4);
-	    Assert.assertTrue(homepage.Test4.isDisplayed());   
-	}
 
 	@Then("the first button should be enabled")
 	public void the_first_button_should_be_enabled() {
@@ -115,12 +89,6 @@ public class HomeSteps extends BaseClass {
 	@And("the second button should be disabled")
 	public void the_second_button_should_be_disabled() {
 		Assert.assertFalse(homepage.Test4_SecondaryButton.isEnabled());
-	}
-	
-	@When("User scroll to Test5 div")
-	public void user_scroll_to_test5_div() {  
-		homepage.ScrollToElement(homepage.Test5);
-	    Assert.assertTrue(homepage.Test5.isDisplayed());
 	}
 
 	@And("User wait for the button to be displayed")
@@ -143,19 +111,15 @@ public class HomeSteps extends BaseClass {
 		Assert.assertFalse(homepage.Test5_button.isEnabled());
 	
 	}
-	@When("User scroll to Test6 div")
-	public void user_scroll_to_test6_div() {  
-		homepage.ScrollToElement(homepage.Test6);	   
-	    Assert.assertTrue(homepage.Test6.isDisplayed());
-	}
 
 	@Then("the value of the cell \\({int}, {int}) should be {string}")
 	public void the_value_of_the_cell_should_be(int CellRow, int CellColumn, String ExectedCellValue) {
 		Assert.assertEquals(homepage.CellValue(CellRow,CellColumn), ExectedCellValue);
-}
+	}
 
 	@After
 	public void TearDownBrowser() {
 		CloseBrowser();
 	}
+	
 }

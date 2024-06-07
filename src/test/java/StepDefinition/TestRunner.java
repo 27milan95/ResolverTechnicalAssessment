@@ -14,6 +14,7 @@ import io.cucumber.junit.CucumberOptions;
         plugin = {"pretty", "html:test-outout/testoutputs.html"},
         monochrome = true, 
 			dryRun = false 
+			//tags = "@smoke"
 )
 public class TestRunner {
 
